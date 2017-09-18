@@ -1,0 +1,31 @@
+﻿<Window x:Class="PresentationTools.Frame"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                      xmlns:behaviours="http://metro.mahapps.com/winfx/xaml/shared"
+                      mc:Ignorable="d"
+                      Height="300" Width="300"
+                      Title="Presentation tools - Frame"
+                      AllowsTransparency="True"
+                      WindowStyle="None"
+                      
+                      Background="{x:Null}"
+                      
+                      WindowStartupLocation="CenterScreen"
+                      Topmost="True"
+        >
+
+    <i:Interaction.Behaviors>
+        <behaviours:BorderlessWindowBehavior  />
+    </i:Interaction.Behaviors>
+
+    <Border BorderBrush="Red"
+            BorderThickness="10"
+            
+            MouseDown="OnMouseDown"
+            MouseWheel="OnMouseWheel"
+            />
+    
+</Window>
