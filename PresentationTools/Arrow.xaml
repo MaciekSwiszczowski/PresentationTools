@@ -26,7 +26,7 @@
         >
 
 
-    <ed:BlockArrow Fill="Red" 
+    <ed:BlockArrow Fill="#88FF0000" 
                    Orientation="Left" 
                    Stroke="White"  
                    Margin="15"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using WpfScreenHelper;
 
 namespace PresentationTools
 {
@@ -44,7 +45,14 @@ namespace PresentationTools
         {
             if (ShowFrameToggleButton.IsChecked == true)
             {
+                var currentScreen = Screen.FromPoint(MouseHelper.MousePosition);
+
                 _frame = new Frame();
+                _frame.Left = currentScreen.WorkingArea.Left;
+                _frame.Top = currentScreen.WorkingArea.Top;
+                _frame.Width = currentScreen.WorkingArea.Width;
+                _frame.Height = currentScreen.WorkingArea.Height;
+
                 _frame.Show();
             }
             else
