@@ -1,13 +1,14 @@
 ﻿using System.Windows.Input;
 using System.Windows;
 using System.Windows.Controls;
+using System;
+using NHotkey.Wpf;
 using static System.Math;
 
 namespace PresentationTools
 {
     public partial class Frame
     {
-        private bool _wasMouseDown;
         private Point _topLeftCorner;
         private bool _wasReleased;
 
@@ -26,7 +27,9 @@ namespace PresentationTools
                 if (e.ChangedButton == MouseButton.Left)
                     DragMove();
             }
+#pragma warning disable RECS0022 // A catch clause that catches System.Exception and has an empty body
             catch
+#pragma warning restore RECS0022 // A catch clause that catches System.Exception and has an empty body
             {
                 // ignored
             }
@@ -68,29 +71,74 @@ namespace PresentationTools
 
         private void Root_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _wasMouseDown = true;
-
             _topLeftCorner = e.GetPosition(this);
-
         }
 
         private void Root_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (_wasReleased)
+                return;
+
             _wasReleased = true;
 
             var position = e.GetPosition(this);
 
             Mouse.OverrideCursor = null;
 
+            var top = Canvas.GetTop(SelectionFrame);
+            var left = Canvas.GetLeft(SelectionFrame);
 
-            GridPanel.ColumnDefinitions[0].Width = new GridLength(Canvas.GetLeft(SelectionFrame));
-            GridPanel.RowDefinitions[0].Height = new GridLength(Canvas.GetTop(SelectionFrame));
+            if (double.IsNaN(left) || (double.IsNaN(top)))
+                return;
+
+
+            GridPanel.ColumnDefinitions[0].Width = new GridLength(left);
+            GridPanel.RowDefinitions[0].Height = new GridLength(top);
 
             GridPanel.ColumnDefinitions[1].Width = new GridLength(SelectionFrame.Width);
             GridPanel.RowDefinitions[1].Height = new GridLength(SelectionFrame.Height);
 
             GridPanel.Visibility = Visibility.Visible;
             CanvasArea.Visibility = Visibility.Collapsed;
+
+
+            if (OwnedWindows.Count > 0 &&  OwnedWindows[0] != null)
+            {
+                Dispatcher.BeginInvoke((Action)(() => OwnedWindows[0].Topmost = false));
+                Dispatcher.BeginInvoke((Action)(() => OwnedWindows[0].Topmost = true));
+            }
+
+
+
         }
+
+        private void LeftGridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            var newWidth = GridPanel.ColumnDefinitions[1].Width.Value - e.HorizontalChange;
+            if (newWidth <= 15)
+            {
+
+                GridPanel.ColumnDefinitions[0].Width = new GridLength(GridPanel.ColumnDefinitions[0].Width.Value - e.HorizontalChange);
+                e.Handled = false;
+                return;
+            }
+
+            GridPanel.ColumnDefinitions[1].Width = new GridLength(newWidth);
+        }
+
+        private void TopGridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+        {
+            var newWidth = GridPanel.RowDefinitions[1].Height.Value - e.VerticalChange;
+            if (newWidth <= 15)
+            {
+
+                GridPanel.RowDefinitions[0].Height = new GridLength(GridPanel.RowDefinitions[0].Height.Value - e.VerticalChange);
+                e.Handled = false;
+                return;
+            }
+
+            GridPanel.RowDefinitions[1].Height = new GridLength(newWidth);
+        }
+
     }
 }
