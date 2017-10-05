@@ -7,8 +7,8 @@ namespace PresentationTools
 {
     public partial class MainWindow
     {
-        private Frame _frame = null;
-        private Arrow _arrow = null;
+        private Frame _frame;
+        private Arrow _arrow;
 
         public MainWindow()
         {
@@ -22,6 +22,7 @@ namespace PresentationTools
                 if (e.ChangedButton == MouseButton.Left)
                     DragMove();
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch (Exception)
             {
             }
@@ -47,11 +48,13 @@ namespace PresentationTools
             {
                 var currentScreen = Screen.FromPoint(MouseHelper.MousePosition);
 
-                _frame = new Frame();
-                _frame.Left = currentScreen.WorkingArea.Left;
-                _frame.Top = currentScreen.WorkingArea.Top;
-                _frame.Width = currentScreen.WorkingArea.Width;
-                _frame.Height = currentScreen.WorkingArea.Height;
+                _frame = new Frame
+                {
+                    Left = currentScreen.WorkingArea.Left,
+                    Top = currentScreen.WorkingArea.Top,
+                    Width = currentScreen.WorkingArea.Width,
+                    Height = currentScreen.WorkingArea.Height
+                };
 
                 _frame.Show();
             }

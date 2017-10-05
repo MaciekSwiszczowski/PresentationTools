@@ -24,9 +24,6 @@
         MouseUp="Root_MouseUp"
         >
 
-    <i:Interaction.Behaviors>
-        <behaviours:BorderlessWindowBehavior  />
-    </i:Interaction.Behaviors>
 
     <Window.Resources>
 

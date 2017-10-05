@@ -7,7 +7,6 @@ namespace PresentationTools
 {
     public partial class Frame
     {
-        private bool _wasMouseDown;
         private Point _topLeftCorner;
         private bool _wasReleased;
 
@@ -18,29 +17,6 @@ namespace PresentationTools
 
             Mouse.OverrideCursor = Cursors.Cross;
         }
-
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            try
-            {
-                if (e.ChangedButton == MouseButton.Left)
-                    DragMove();
-            }
-            catch
-            {
-                // ignored
-            }
-        }
-
-        private void OnMouseWheel(object sender, MouseWheelEventArgs e)
-        {
-            const int step = 10;
-            var sign = e.Delta > 0 ? 1 : -1;
-
-            Height += step * sign;
-            Width += step * sign;
-        }
-
 
         private void Root_MouseMove(object sender, MouseEventArgs e)
         {
@@ -68,17 +44,12 @@ namespace PresentationTools
 
         private void Root_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _wasMouseDown = true;
-
             _topLeftCorner = e.GetPosition(this);
-
         }
 
         private void Root_MouseUp(object sender, MouseButtonEventArgs e)
         {
             _wasReleased = true;
-
-            var position = e.GetPosition(this);
 
             Mouse.OverrideCursor = null;
 
