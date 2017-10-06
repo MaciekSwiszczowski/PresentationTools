@@ -1,0 +1,6 @@
+﻿- installer
+- fading option
+- show dot on click
+- fading pen
+- capture rectangle and zoom
+- capture rectangle in WPF app (e.g. Visual Studio) and zoom without quality loosing
