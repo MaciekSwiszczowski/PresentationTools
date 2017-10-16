@@ -18,7 +18,8 @@
         MouseMove="Root_MouseMove"
         MouseDown="Root_MouseDown"
         MouseUp="Root_MouseUp"
-        >
+        
+        ShowInTaskbar="false">
 
     <Window.Resources>
 
@@ -65,7 +66,8 @@
             <Rectangle Grid.Column="0"
                        Grid.Row="0"
                        Grid.ColumnSpan="3"
-                       Fill="{StaticResource ShadowColor}" />
+                       Fill="{StaticResource ShadowColor}" 
+                       />
             
             <Rectangle Grid.Column="0"
                        Grid.Row="2"

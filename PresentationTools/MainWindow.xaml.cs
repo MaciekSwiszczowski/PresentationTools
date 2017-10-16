@@ -4,6 +4,7 @@ using System.Windows.Input;
 using NHotkey;
 using NHotkey.Wpf;
 using WpfScreenHelper;
+using Gma.System.MouseKeyHook;
 
 namespace PresentationTools
 {
@@ -11,15 +12,45 @@ namespace PresentationTools
     {
         private Frame _frame;
         private Arrow _arrow;
+        private IKeyboardMouseEvents _m_GlobalHook;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            HotkeyManager.Current.AddOrReplace("Increment", Key.F, ModifierKeys.Control | ModifierKeys.Alt, ShowFrame);
+            HotkeyManager.Current.AddOrReplace("ShowFrame", Key.F, ModifierKeys.Control | ModifierKeys.Alt, ShowFrame);
+            HotkeyManager.Current.AddOrReplace("ShowArrow", Key.A, ModifierKeys.Control | ModifierKeys.Alt, ShowArrow);
 
-            //HotkeyManager.HotkeyAlreadyRegistered
+            _m_GlobalHook = Hook.GlobalEvents();
+            _m_GlobalHook.MouseDownExt += GlobalHookMouseDownExt;
+
+            
         }
+
+        private void ShowArrow(object sender, HotkeyEventArgs e)
+        {
+            ShowArrowToggleButton.IsChecked = !ShowArrowToggleButton.IsChecked;
+            ShowArrow();
+        }
+
+        private void GlobalHookMouseDownExt(object sender, MouseEventExtArgs e)
+        {
+            var position = MouseHelper.MousePosition;
+
+            var w = new Pointer
+            {
+                Width = 30,
+                Height = 30
+            };
+
+            w.Left = position.X - w.Width / 2;
+            w.Top = position.Y - w.Height / 2;
+            w.Topmost = true;
+
+
+            w.Show();
+        }
+
 
         private void ShowFrame(object sender, HotkeyEventArgs e)
         {
@@ -44,9 +75,24 @@ namespace PresentationTools
 
         private void OnShowArrowClick(object sender, RoutedEventArgs e)
         {
+            ShowArrow();
+        }
+
+        private void OnShowFrameClick(object sender, RoutedEventArgs e)
+        {
+            ShowFrame();
+        }
+
+        private void ShowArrow()
+        {
             if (ShowArrowToggleButton.IsChecked == true)
             {
+                var position = MouseHelper.MousePosition;
+
                 _arrow = new Arrow();
+
+                _arrow.Left = position.X - _arrow.Width/2;
+                _arrow.Top = position.Y - _arrow.Height / 2;
                 _arrow.Show();
             }
             else
@@ -54,11 +100,6 @@ namespace PresentationTools
                 _arrow?.Close();
                 _arrow = null;
             }
-        }
-
-        private void OnShowFrameClick(object sender, RoutedEventArgs e)
-        {
-            ShowFrame();
         }
 
         private void ShowFrame()
@@ -77,8 +118,6 @@ namespace PresentationTools
                 };
 
                 _frame.Show();
-
-                //Owner = _frame;
             }
             else
             {

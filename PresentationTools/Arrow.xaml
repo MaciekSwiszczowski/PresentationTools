@@ -8,14 +8,14 @@
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         x:Name="ArrowWindow"
         mc:Ignorable="d"
-        Height="100" Width="180"
+        Height="100" 
         
         AllowsTransparency="True"
         WindowStyle="None"
         
         Background="{x:Null}"
         
-        WindowStartupLocation="CenterScreen"
+        WindowStartupLocation="Manual"
         Topmost="True"
         ResizeMode="NoResize"
         
@@ -37,10 +37,21 @@
         </ed:BlockArrow.Effect>
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="MouseEnter" >
-                <ei:ChangePropertyAction PropertyName="Stroke" Value="Red" />
+                <ei:ChangePropertyAction PropertyName="Stroke"
+                                         Value="Red"
+                                         Duration="2000" />
+                <ei:ChangePropertyAction  PropertyName="Width"
+                                          Value="180" />
+
             </i:EventTrigger>
             <i:EventTrigger EventName="MouseLeave" >
-                <ei:ChangePropertyAction  PropertyName="Stroke" Value="White"  />
+                <ei:ChangePropertyAction  PropertyName="Stroke"
+                                          Value="White"
+                                          Duration="20" />
+                <ei:ChangePropertyAction  PropertyName="Width"
+                                          Value="500"
+                                          Duration="00:00:01.00"
+                                           />
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </ed:BlockArrow>

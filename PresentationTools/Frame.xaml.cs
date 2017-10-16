@@ -2,14 +2,16 @@
 using System.Windows;
 using System.Windows.Controls;
 using System;
-using NHotkey.Wpf;
 using static System.Math;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using PresentationTools.Utils;
 
 namespace PresentationTools
 {
     public partial class Frame
     {
-        private Point _topLeftCorner;
+        private Point _staringPosition;
         private bool _wasReleased;
 
         public Frame()
@@ -35,6 +37,14 @@ namespace PresentationTools
             }
         }
 
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+
+            var hwnd = new WindowInteropHelper(this).Handle;
+            WinApi.HideFromAltTab(hwnd);
+        }
+
         private void OnMouseWheel(object sender, MouseWheelEventArgs e)
         {
             const int step = 10;
@@ -54,11 +64,11 @@ namespace PresentationTools
 
             if (Mouse.LeftButton == MouseButtonState.Pressed)
             {
-                var left = Min(_topLeftCorner.X, position.X);
-                var top = Min(_topLeftCorner.Y, position.Y);
+                var left = Min(_staringPosition.X, position.X);
+                var top = Min(_staringPosition.Y, position.Y);
 
-                var width = Max(Abs(_topLeftCorner.X - position.X), 20);
-                var height = Max(Abs(_topLeftCorner.Y - position.Y), 20);
+                var width = Max(Abs(_staringPosition.X - position.X), 20);
+                var height = Max(Abs(_staringPosition.Y - position.Y), 20);
 
                 Canvas.SetLeft(SelectionFrame, left);
                 Canvas.SetTop(SelectionFrame, top);
@@ -71,13 +81,20 @@ namespace PresentationTools
 
         private void Root_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            _topLeftCorner = e.GetPosition(this);
+            _staringPosition = e.GetPosition(this);
+
         }
 
         private void Root_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (_wasReleased)
                 return;
+
+            if (Abs(SelectionFrame.Width) < 2.0 || 
+                Abs(SelectionFrame.Height) < 2.0 ||
+                double.IsNaN(SelectionFrame.Width) ||
+                double.IsNaN(SelectionFrame.Height))
+                Close();
 
             _wasReleased = true;
 
@@ -107,9 +124,6 @@ namespace PresentationTools
                 Dispatcher.BeginInvoke((Action)(() => OwnedWindows[0].Topmost = false));
                 Dispatcher.BeginInvoke((Action)(() => OwnedWindows[0].Topmost = true));
             }
-
-
-
         }
 
         private void LeftGridSplitter_DragCompleted(object sender, System.Windows.Controls.Primitives.DragCompletedEventArgs e)

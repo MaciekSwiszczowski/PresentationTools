@@ -1,5 +1,4 @@
-﻿- installer
-- fading option
+﻿- fading option
 - show dot on click
 - fading pen
 - capture rectangle and zoom
