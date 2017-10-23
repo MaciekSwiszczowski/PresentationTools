@@ -14,12 +14,14 @@
         Topmost="True"
         ShowInTaskbar="False"
         >
-    <Ellipse Fill="#8800FF00" >
+    <Ellipse Fill="#88FFFFFF"
+             Stroke="#88000000"
+             StrokeThickness="6">
         <i:Interaction.Triggers>
             <i:EventTrigger EventName="Loaded">
                 <ei:ChangePropertyAction PropertyName="Opacity"
                                          Value="0"
-                                         Duration="00:00:00.30" />
+                                         Duration="00:00:01.00" />
             </i:EventTrigger>
         </i:Interaction.Triggers>
     </Ellipse>

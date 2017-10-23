@@ -70,6 +70,7 @@ namespace PresentationTools
             catch (Exception)
 #pragma warning restore RECS0022 // A catch clause that catches System.Exception and has an empty body
             {
+                // ignored
             }
         }
 
@@ -91,7 +92,7 @@ namespace PresentationTools
 
                 _arrow = new Arrow();
 
-                _arrow.Left = position.X - _arrow.Width/2;
+                _arrow.Left = position.X - _arrow.Width / 2;
                 _arrow.Top = position.Y - _arrow.Height / 2;
                 _arrow.Show();
             }

@@ -1,71 +1,71 @@
-﻿<controls:MetroWindow  x:Class="PresentationTools.MainWindow"
-                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                       mc:Ignorable="d"
-                       SaveWindowPosition="True"
-                       Title="Presentation tools" 
-                       TextOptions.TextFormattingMode="Display"
+﻿<Window x:Class="PresentationTools.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="Presentation tools" 
+        TextOptions.TextFormattingMode="Display"
                        
                        
-                       SizeToContent="WidthAndHeight"
-                       MinHeight="150"
-                       BorderThickness="0"
-                       WindowStartupLocation="CenterScreen"
-                       GlowBrush="{DynamicResource AccentColorBrush}"
-                       WindowTransitionsEnabled="True"
-                       MouseDown="OnMouseDown"
-                       Topmost="True"
-                       ShowMaxRestoreButton="True"
-                       ShowMinButton="True"
-                       ResizeMode="NoResize"
-                       >
+        SizeToContent="WidthAndHeight"
+        MinHeight="150"
+        BorderThickness="1"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="OnMouseDown"
+        Topmost="True"
+        ResizeMode="NoResize"
+        
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.FontWeight="Medium"
+        TextElement.FontSize="14"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.CheckBox.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.TextBlock.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Window.Resources>
 
     <StackPanel VerticalAlignment="Center">
-        <DockPanel VerticalAlignment="Center"
-                   HorizontalAlignment="Left">
-            <ToggleButton Style="{DynamicResource MetroCircleToggleButtonStyle }"
-                          Width="30"  Height="30"
-                          DockPanel.Dock="Left"
-                          VerticalAlignment="Center"
-                          Margin="50,10"
-                          x:Name="ShowArrowToggleButton"
-                          Click="OnShowArrowClick"
-                          />
-
-            <TextBlock Text="show arrow"
-                       DockPanel.Dock="Right"
-                       VerticalAlignment="Center"
-                       Margin="10"
-                       Width="200"
-                       />
+        <CheckBox 
+            DockPanel.Dock="Left"
+            VerticalAlignment="Center"
+            Margin="50,10"
+            x:Name="ShowArrowToggleButton"
+            Click="OnShowArrowClick"
+            Content="Show arrow"
+            VerticalContentAlignment="Center"
+            />
 
 
-        </DockPanel>
+        <CheckBox 
+            DockPanel.Dock="Left"
+            VerticalAlignment="Center"
+            Margin="50,10"
+            x:Name="ShowFrameToggleButton"
+            Click="OnShowFrameClick"
+            Content="Show frame"
+            VerticalContentAlignment="Center"
+            />
 
-        <DockPanel VerticalAlignment="Center"
-                   HorizontalAlignment="Left">
-            <ToggleButton Style="{DynamicResource MetroCircleToggleButtonStyle }"
-                          Width="30"  Height="30"
-                          DockPanel.Dock="Left"
-                          VerticalAlignment="Center"
-                          Margin="50,10"
-                          x:Name="ShowFrameToggleButton"
-                          Click="OnShowFrameClick"
-                          />
+<!--        <materialDesign:TimePicker-->
+<!--            Is24Hours="true"-->
+<!--            x:Name="PresetTimePicker"-->
+<!--            Width="100"-->
+<!--            HorizontalAlignment="Left"-->
+<!--            Margin="16" />-->
 
-            <TextBlock Text="show frame"
-                       DockPanel.Dock="Right"
-                       VerticalAlignment="Center"
-                       Margin="10"
-                       Width="200"
-                       />
-
-
-        </DockPanel>
 
     </StackPanel>
-</controls:MetroWindow>
+</Window>
 
