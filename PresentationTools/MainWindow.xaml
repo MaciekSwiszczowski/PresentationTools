@@ -8,7 +8,6 @@
         Title="Presentation tools" 
         TextOptions.TextFormattingMode="Display"
                        
-                       
         SizeToContent="WidthAndHeight"
         MinHeight="150"
         BorderThickness="1"
@@ -22,6 +21,8 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        
+        Grid.IsSharedSizeScope="True"
         >
 
     <Window.Resources>
@@ -43,10 +44,25 @@
             Margin="50,10"
             x:Name="ShowArrowToggleButton"
             Click="OnShowArrowClick"
-            Content="Show arrow"
-            VerticalContentAlignment="Center"
-            />
-
+            VerticalContentAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="FirstColumn"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition SharedSizeGroup="SecondColumn"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           Text="Show arrow"
+                           VerticalAlignment="Center"
+                           />
+                <TextBlock Grid.Column="2" 
+                           Text="Ctrl+Alt+A" 
+                           FontSize="11" 
+                           FontStyle="Italic" 
+                           VerticalAlignment="Center"
+                           Foreground="Gray" />
+            </Grid>
+        </CheckBox>
 
         <CheckBox 
             DockPanel.Dock="Left"
@@ -54,16 +70,53 @@
             Margin="50,10"
             x:Name="ShowFrameToggleButton"
             Click="OnShowFrameClick"
-            Content="Show frame"
-            VerticalContentAlignment="Center"
-            />
+            VerticalContentAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="FirstColumn"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition SharedSizeGroup="SecondColumn"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           Text="Show frame"
+                           VerticalAlignment="Center"
+                />
+                <TextBlock Grid.Column="2" 
+                           Text="Ctrl+Alt+F" 
+                           FontSize="11" 
+                           FontStyle="Italic" 
+                           VerticalAlignment="Center"
+                           Foreground="Gray" />
+            </Grid>            
+        </CheckBox>
 
-<!--        <materialDesign:TimePicker-->
-<!--            Is24Hours="true"-->
-<!--            x:Name="PresetTimePicker"-->
-<!--            Width="100"-->
-<!--            HorizontalAlignment="Left"-->
-<!--            Margin="16" />-->
+        <CheckBox 
+            DockPanel.Dock="Left"
+            VerticalAlignment="Center"
+            Margin="50,10"
+            x:Name="ShowSpotToggleButton"
+            Click="OnShowSpotClick"
+            VerticalContentAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition SharedSizeGroup="FirstColumn"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition SharedSizeGroup="SecondColumn"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" 
+                           Text="Show spot"
+                           VerticalAlignment="Center"
+                />
+                <TextBlock Grid.Column="2" 
+                           Text="Ctrl+Alt+S" 
+                           FontSize="11" 
+                           FontStyle="Italic" 
+                           VerticalAlignment="Center"
+                           Foreground="Gray" />
+            </Grid>
+        </CheckBox>
+
+        <!--<TextBlock Text="{Binding TimeLeft}" />-->
 
 
     </StackPanel>

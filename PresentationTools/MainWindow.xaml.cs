@@ -12,20 +12,46 @@ namespace PresentationTools
     {
         private Frame _frame;
         private Arrow _arrow;
-        private IKeyboardMouseEvents _m_GlobalHook;
-
+        private Spot _spot;
         public MainWindow()
+
         {
             InitializeComponent();
 
             HotkeyManager.Current.AddOrReplace("ShowFrame", Key.F, ModifierKeys.Control | ModifierKeys.Alt, ShowFrame);
             HotkeyManager.Current.AddOrReplace("ShowArrow", Key.A, ModifierKeys.Control | ModifierKeys.Alt, ShowArrow);
+            HotkeyManager.Current.AddOrReplace("ShowSpot", Key.S, ModifierKeys.Control | ModifierKeys.Alt, ShowSpot);
 
-            _m_GlobalHook = Hook.GlobalEvents();
-            _m_GlobalHook.MouseDownExt += GlobalHookMouseDownExt;
-
-            
+            var mGlobalHook = Hook.GlobalEvents();
+            mGlobalHook.MouseDownExt += GlobalHookMouseDownExt;
         }
+
+        private void ShowSpot(object sender, HotkeyEventArgs e)
+        {
+            ShowSpotToggleButton.IsChecked = !ShowSpotToggleButton.IsChecked;
+            ShowSpot();
+        }
+
+        private void ShowSpot()
+        {
+            if (ShowSpotToggleButton.IsChecked == true)
+            {
+                _spot = new Spot();
+                _spot.Show();
+            }
+            else
+            {
+                _spot.OnClose();
+                _spot.Close();
+            }
+
+        }
+
+        private void OnShowSpotClick(object sender, RoutedEventArgs e)
+        {
+            ShowSpot();
+        }
+
 
         private void ShowArrow(object sender, HotkeyEventArgs e)
         {
@@ -47,7 +73,6 @@ namespace PresentationTools
             w.Top = position.Y - w.Height / 2;
             w.Topmost = true;
 
-
             w.Show();
         }
 
@@ -55,7 +80,6 @@ namespace PresentationTools
         private void ShowFrame(object sender, HotkeyEventArgs e)
         {
             ShowFrameToggleButton.IsChecked = !ShowFrameToggleButton.IsChecked;
-
             ShowFrame();
         }
 
@@ -127,5 +151,6 @@ namespace PresentationTools
                 _frame = null;
             }
         }
+
     }
 }
